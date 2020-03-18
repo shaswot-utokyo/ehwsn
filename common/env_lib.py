@@ -699,12 +699,12 @@ class sparse_v0c(eno_v0):
             return 0
 # End of sparse_v0c
 ########################################################
-class eno_v1(eno_v0):
+class eno_v0a(eno_v0):
     """An ambient environment simulator for OpenAI gym."""
     metadata = {'render.modes': ['human']}
     
     def __init__(self):
-        super(eno_v1, self).__init__()
+        super(eno_v0a, self).__init__()
         
         # Actions = 10 discrete duty cycles
         self.NO_OF_DUTY_CYCLES = 10
@@ -722,4 +722,33 @@ class eno_v1(eno_v0):
 #         self.HFACTOR = 0.01 # Default
 #         self.DFACTOR = 0.005 # Default
         self.HFACTOR = 0.02 
-        self.DFACTOR = 0.005 
+        self.DFACTOR = 0.005
+# End of eno_v0a
+########################################################
+########################################################
+class eno_v0b(eno_v0):
+    """An ambient environment simulator for OpenAI gym."""
+    metadata = {'render.modes': ['human']}
+    
+    def __init__(self):
+        super(eno_v0b, self).__init__()
+        
+        # Actions = 10 discrete duty cycles
+        self.NO_OF_DUTY_CYCLES = 10
+        self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
+
+        # Observation = [time, h_energy, p_energy, b_energy]
+        self.observation_space = spaces.Box(low=0, 
+                                            high=1, 
+                                            shape=(4,))
+        
+        self.MIN_BATT = 0.1
+        self.MIN_DC = 1/self.NO_OF_DUTY_CYCLES # Minimum duty cycle
+
+        
+#         self.HFACTOR = 0.01 # Default
+#         self.DFACTOR = 0.005 # Default
+        self.HFACTOR = 0.01 
+        self.DFACTOR = 0.005
+# End of eno_v0b
+########################################################
