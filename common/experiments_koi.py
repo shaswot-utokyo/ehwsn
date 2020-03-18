@@ -12,7 +12,7 @@ EXP_PARAMS = {
         'epsilon_start':    1.0,
         'epsilon_final':    0.01,
         'learning_rate':    1E-3,
-        'gamma':            0.99, 
+        'gamma':            0.999, 
         'batch_size':       32
     },
     'koi-eno-g999': { 
