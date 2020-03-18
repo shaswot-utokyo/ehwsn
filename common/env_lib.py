@@ -603,4 +603,21 @@ class eno_v0(gym.Env):
         else:
             return (0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1
     # End of eno_v0
-
+########################################################
+class eno_v0_g99(eno_v0): # for gamma=0.99
+    def reward(self,action): # symmetric linear reward
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        else:
+            return ((0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1)*0.1
+# End of eno_v0_g99
+########################################################
+########################################################
+class eno_v0_g999(eno_v0): # for gamma=0.99
+    def reward(self,action): # symmetric linear reward
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        else:
+            return ((0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1)*0.01
+# End of eno_v0_g999
+########################################################

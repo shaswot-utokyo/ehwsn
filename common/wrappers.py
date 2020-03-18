@@ -13,7 +13,7 @@ class add_enp_obs(gym.ObservationWrapper):
                                             dtype=np.float32)
 
     def observation(self, obs):
-        enp = 0.5 - obs[3]
+        enp = 0.5 - obs[3] #BMAX/2 - benergy_obs
         return np.append(obs,enp)
 ########################################################
 class remove_time_obs(gym.ObservationWrapper):
