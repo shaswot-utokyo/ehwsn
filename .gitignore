@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+.idea/
+scratch.ipynb
+
+# Tensorboard Runs
+runs/
+
+# Pytorch models
+/models/
+*.pt
+
+# Folders
+/experiment_notebooks/
+/experiment_tblogs/
+*.ods
+
+
