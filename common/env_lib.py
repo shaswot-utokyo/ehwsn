@@ -622,6 +622,15 @@ class eno_v0_g999(eno_v0): # for gamma=0.99
 # End of eno_v0_g999
 ########################################################
 ########################################################
+class eno_v0_g999a(eno_v0): # for gamma=0.99
+    def reward(self,action): # symmetric linear reward
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        else:
+            return ((0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1)*0.1
+# End of eno_v0_g999a
+########################################################
+########################################################
 class sparse_v0a(eno_v0):
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
