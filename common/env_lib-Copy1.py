@@ -752,6 +752,7 @@ class eno_v0b(eno_v0):
         self.DFACTOR = 0.005
 # End of eno_v0b
 ########################################################
+<<<<<<< HEAD
 class eno_v0_T24(eno_v0):
     def __init__(self):
         super(eno_v0_T24, self).__init__()
@@ -917,6 +918,18 @@ class eno_v0_T120(eno_v0):
         
         # Actions = 10 discrete duty cycles
         self.NO_OF_DUTY_CYCLES = 10
+=======
+########################################################
+class eno_v0c(eno_v0):
+    """An ambient environment simulator for OpenAI gym."""
+    metadata = {'render.modes': ['human']}
+    
+    def __init__(self):
+        super(eno_v0c, self).__init__()
+        
+        # Actions = 10 discrete duty cycles
+        self.NO_OF_DUTY_CYCLES = 5 #<<<<<
+>>>>>>> 615b88eedd04d36ef3dc877fe40976e5caef3cc4
         self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
 
         # Observation = [time, h_energy, p_energy, b_energy]
@@ -930,6 +943,7 @@ class eno_v0_T120(eno_v0):
         
 #         self.HFACTOR = 0.01 # Default
 #         self.DFACTOR = 0.005 # Default
+<<<<<<< HEAD
         self.HFACTOR = 0.01*240/120
         self.DFACTOR = 0.005*240/120
     def reset(self, location, year, LOG_DATA=True):
@@ -989,4 +1003,9 @@ class eno_v0_T120(eno_v0):
             self.env_log.append(self.obs)
         return np.array(self.obs)
 # End of eno_v0_T120
+=======
+        self.HFACTOR = 0.01 
+        self.DFACTOR = 0.005
+# End of eno_v0b
+>>>>>>> 615b88eedd04d36ef3dc877fe40976e5caef3cc4
 ########################################################
