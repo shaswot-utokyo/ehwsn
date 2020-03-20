@@ -752,3 +752,241 @@ class eno_v0b(eno_v0):
         self.DFACTOR = 0.005
 # End of eno_v0b
 ########################################################
+class eno_v0_T24(eno_v0):
+    def __init__(self):
+        super(eno_v0_T24, self).__init__()
+        
+        # Actions = 10 discrete duty cycles
+        self.NO_OF_DUTY_CYCLES = 10
+        self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
+
+        # Observation = [time, h_energy, p_energy, b_energy]
+        self.observation_space = spaces.Box(low=0, 
+                                            high=1, 
+                                            shape=(4,))
+        
+        self.MIN_BATT = 0.1
+        self.MIN_DC = 1/self.NO_OF_DUTY_CYCLES # Minimum duty cycle
+
+        
+#         self.HFACTOR = 0.01 # Default
+#         self.DFACTOR = 0.005 # Default
+        self.HFACTOR = 0.01*240/24
+        self.DFACTOR = 0.005*240/24
+    def reset(self, location, year, LOG_DATA=True):
+
+        # Characterize the harvester
+        self.READINGS_PER_DAY = 24
+        REQ_TIMESLOTS_PER_DAY = 24
+        PREDICTION_HORIZON=24
+        
+
+        self.env_harvester = csv_solar_harvester(location=location,
+                                year=year,
+                                READINGS_PER_DAY = self.READINGS_PER_DAY,
+                                SMAX=4.0, # Max GSR
+                                HENERGY_NOISE=0.1, # henergy artifical noise
+                                NORMALIZED_HMIN_THRES=1E-5, # henergy cutoff
+                                REQ_TIMESLOTS_PER_DAY=REQ_TIMESLOTS_PER_DAY, # no. of timeslots per day
+                                PREDICTION_HORIZON=PREDICTION_HORIZON, # lookahead horizon to predict energy
+                                PENERGY_NOISE=0.005)
+        self.env_timeslot_values = self.env_harvester.time_slots
+        self.ENV_LIFETIME = self.env_harvester.no_of_days
+        
+        # Characterize the battery
+        self.BINIT = 0.7
+        self.BEFF  = 1.0
+        self.env_battery = battery(self.BINIT,self.BEFF)
+
+        # Characterize utility generator
+        
+        # Characterize channel fading
+        
+        # Data logging variables
+        self.LOG_DATA = LOG_DATA # Flag to whether or not log data
+        self.env_log = [] # record all values in the environment
+        self.action_log = [] # record all actions sent to the environment
+        self.eno_log = []
+        
+        # Observation variables
+        self.time_obs = None
+        self.henergy_obs = None
+        self.penergy_obs = None
+        self.benergy_obs = None
+        
+        # Environment Flags
+        self.RECOVERY_MODE = False # battery is recovering to BINIT from complete discharge & node is suspended
+        
+
+        # Get observation
+        self.time_obs, self.henergy_obs, self.penergy_obs, DAY_END, HARVESTER_END = self.env_harvester.step()
+        self.benergy_obs = self.env_battery.get_batt_state()
+        
+        self.obs = (self.time_obs/self.READINGS_PER_DAY, 
+                    self.henergy_obs, 
+                    self.penergy_obs, 
+                    self.benergy_obs)
+        if self.LOG_DATA:
+            self.env_log.append(self.obs)
+        return np.array(self.obs)
+# End of eno_v0_T24
+########################################################
+class eno_v0_T48(eno_v0):
+    def __init__(self):
+        super(eno_v0_T48, self).__init__()
+        
+        # Actions = 10 discrete duty cycles
+        self.NO_OF_DUTY_CYCLES = 10
+        self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
+
+        # Observation = [time, h_energy, p_energy, b_energy]
+        self.observation_space = spaces.Box(low=0, 
+                                            high=1, 
+                                            shape=(4,))
+        
+        self.MIN_BATT = 0.1
+        self.MIN_DC = 1/self.NO_OF_DUTY_CYCLES # Minimum duty cycle
+
+        
+#         self.HFACTOR = 0.01 # Default
+#         self.DFACTOR = 0.005 # Default
+        self.HFACTOR = 0.01*240/48
+        self.DFACTOR = 0.005*240/48
+    def reset(self, location, year, LOG_DATA=True):
+
+        # Characterize the harvester
+        self.READINGS_PER_DAY = 24
+        REQ_TIMESLOTS_PER_DAY = 48
+        PREDICTION_HORIZON=48
+        
+
+        self.env_harvester = csv_solar_harvester(location=location,
+                                year=year,
+                                READINGS_PER_DAY = self.READINGS_PER_DAY,
+                                SMAX=4.0, # Max GSR
+                                HENERGY_NOISE=0.1, # henergy artifical noise
+                                NORMALIZED_HMIN_THRES=1E-5, # henergy cutoff
+                                REQ_TIMESLOTS_PER_DAY=REQ_TIMESLOTS_PER_DAY, # no. of timeslots per day
+                                PREDICTION_HORIZON=PREDICTION_HORIZON, # lookahead horizon to predict energy
+                                PENERGY_NOISE=0.005)
+        self.env_timeslot_values = self.env_harvester.time_slots
+        self.ENV_LIFETIME = self.env_harvester.no_of_days
+        
+        # Characterize the battery
+        self.BINIT = 0.7
+        self.BEFF  = 1.0
+        self.env_battery = battery(self.BINIT,self.BEFF)
+
+        # Characterize utility generator
+        
+        # Characterize channel fading
+        
+        # Data logging variables
+        self.LOG_DATA = LOG_DATA # Flag to whether or not log data
+        self.env_log = [] # record all values in the environment
+        self.action_log = [] # record all actions sent to the environment
+        self.eno_log = []
+        
+        # Observation variables
+        self.time_obs = None
+        self.henergy_obs = None
+        self.penergy_obs = None
+        self.benergy_obs = None
+        
+        # Environment Flags
+        self.RECOVERY_MODE = False # battery is recovering to BINIT from complete discharge & node is suspended
+        
+
+        # Get observation
+        self.time_obs, self.henergy_obs, self.penergy_obs, DAY_END, HARVESTER_END = self.env_harvester.step()
+        self.benergy_obs = self.env_battery.get_batt_state()
+        
+        self.obs = (self.time_obs/self.READINGS_PER_DAY, 
+                    self.henergy_obs, 
+                    self.penergy_obs, 
+                    self.benergy_obs)
+        if self.LOG_DATA:
+            self.env_log.append(self.obs)
+        return np.array(self.obs)
+# End of eno_v0_T48
+########################################################
+########################################################
+class eno_v0_T120(eno_v0):
+    def __init__(self):
+        super(eno_v0_T120, self).__init__()
+        
+        # Actions = 10 discrete duty cycles
+        self.NO_OF_DUTY_CYCLES = 10
+        self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
+
+        # Observation = [time, h_energy, p_energy, b_energy]
+        self.observation_space = spaces.Box(low=0, 
+                                            high=1, 
+                                            shape=(4,))
+        
+        self.MIN_BATT = 0.1
+        self.MIN_DC = 1/self.NO_OF_DUTY_CYCLES # Minimum duty cycle
+
+        
+#         self.HFACTOR = 0.01 # Default
+#         self.DFACTOR = 0.005 # Default
+        self.HFACTOR = 0.01*240/120
+        self.DFACTOR = 0.005*240/120
+    def reset(self, location, year, LOG_DATA=True):
+
+        # Characterize the harvester
+        self.READINGS_PER_DAY = 24
+        REQ_TIMESLOTS_PER_DAY = 120
+        PREDICTION_HORIZON=120
+        
+
+        self.env_harvester = csv_solar_harvester(location=location,
+                                year=year,
+                                READINGS_PER_DAY = self.READINGS_PER_DAY,
+                                SMAX=4.0, # Max GSR
+                                HENERGY_NOISE=0.1, # henergy artifical noise
+                                NORMALIZED_HMIN_THRES=1E-5, # henergy cutoff
+                                REQ_TIMESLOTS_PER_DAY=REQ_TIMESLOTS_PER_DAY, # no. of timeslots per day
+                                PREDICTION_HORIZON=PREDICTION_HORIZON, # lookahead horizon to predict energy
+                                PENERGY_NOISE=0.005)
+        self.env_timeslot_values = self.env_harvester.time_slots
+        self.ENV_LIFETIME = self.env_harvester.no_of_days
+        
+        # Characterize the battery
+        self.BINIT = 0.7
+        self.BEFF  = 1.0
+        self.env_battery = battery(self.BINIT,self.BEFF)
+
+        # Characterize utility generator
+        
+        # Characterize channel fading
+        
+        # Data logging variables
+        self.LOG_DATA = LOG_DATA # Flag to whether or not log data
+        self.env_log = [] # record all values in the environment
+        self.action_log = [] # record all actions sent to the environment
+        self.eno_log = []
+        
+        # Observation variables
+        self.time_obs = None
+        self.henergy_obs = None
+        self.penergy_obs = None
+        self.benergy_obs = None
+        
+        # Environment Flags
+        self.RECOVERY_MODE = False # battery is recovering to BINIT from complete discharge & node is suspended
+        
+
+        # Get observation
+        self.time_obs, self.henergy_obs, self.penergy_obs, DAY_END, HARVESTER_END = self.env_harvester.step()
+        self.benergy_obs = self.env_battery.get_batt_state()
+        
+        self.obs = (self.time_obs/self.READINGS_PER_DAY, 
+                    self.henergy_obs, 
+                    self.penergy_obs, 
+                    self.benergy_obs)
+        if self.LOG_DATA:
+            self.env_log.append(self.obs)
+        return np.array(self.obs)
+# End of eno_v0_T120
+########################################################
