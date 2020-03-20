@@ -162,7 +162,7 @@ def display_env_log_eno(env, reward_rec, RECOVERY_rec, START_DAY=0, NO_OF_DAY_TO
 #     henergy_ax.set_ylim(0,1)
 #     penergy_ax.set_ylim(0,1)
     benergy_ax.set_ylim(0,1)
-#     sense_dc_ax.set_ylim(-0.1,1)
+    sense_dc_ax.set_ylim(-0.1,1)
 #     reward_ax.set_ylim(-1,1)
 #     recovery_ax.set_ylim(0,1)
 #     utility_ax.set_ylim(0,1)

@@ -631,7 +631,7 @@ class eno_v0_g999a(eno_v0): # for gamma=0.99
 # End of eno_v0_g999a
 ########################################################
 ########################################################
-class sparse_v0a(eno_v0):
+class sparse_v0_1x(eno_v0):
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
@@ -651,10 +651,10 @@ class sparse_v0a(eno_v0):
                 return -1
         else:
             return 0
-# End of sparse_v0a
+# End of sparse_v0_1x
 ########################################################
 ########################################################
-class sparse_v0b(eno_v0):
+class sparse_v0_2x(eno_v0):
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
@@ -674,10 +674,10 @@ class sparse_v0b(eno_v0):
                 return -1
         else:
             return 0
-# End of sparse_v0b
+# End of sparse_v0_2x
 ########################################################
 ########################################################
-class sparse_v0c(eno_v0):
+class sparse_v0_4x(eno_v0):
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
@@ -697,7 +697,7 @@ class sparse_v0c(eno_v0):
                 return -1
         else:
             return 0
-# End of sparse_v0c
+# End of sparse_v0_4x
 ########################################################
 class eno_v0a(eno_v0):
     """An ambient environment simulator for OpenAI gym."""
@@ -978,4 +978,49 @@ class eno_v0_T120(eno_v0):
         return np.array(self.obs)
 # End of eno_v0_T120
 ########################################################
-
+########################################################
+class sparse_v0_T120_4x(eno_v0_T120):
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((q1_time, half_time, q3_time, end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_T120_4x
+########################################################
+########################################################
+class sparse_v0_T24_4x(eno_v0_T24):
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((q1_time, half_time, q3_time, end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_T120_4x
+########################################################
