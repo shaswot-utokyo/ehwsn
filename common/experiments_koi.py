@@ -1,84 +1,356 @@
 EXP_PARAMS = {
-#     'koi-sparse_v0_T24_4x-g97-5step': { 
-#         'env_name':         "sparse_v0_T24_4x",
-#         'double_q':         True,
-#         'dueling':          True,
-#         'nn_layer_width':   32,
-#         'rollout_steps':    5,
-#         'replay_size':      120*365*2,#240*365*2/2, #<<<
-#         'replay_initial':   120*10,#240*10/2,#<<<
-#         'target_net_sync':  120*10,#240*10/2, #<<<
-#         'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
-#         'epsilon_start':    1.0,
-#         'epsilon_final':    0.01,
-#         'learning_rate':    1E-3,
-#         'gamma':            0.97, 
-#         'batch_size':       32
-#     },
-#     'koi-sparse_v0_T24_4x-g99-5step': { 
-#         'env_name':         "sparse_v0_T24_4x",
-#         'double_q':         True,
-#         'dueling':          True,
-#         'nn_layer_width':   32,
-#         'rollout_steps':    5,
-#         'replay_size':      120*365*2,#240*365*2/2, #<<<
-#         'replay_initial':   120*10,#240*10/2,#<<<
-#         'target_net_sync':  120*10,#240*10/2, #<<<
-#         'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
-#         'epsilon_start':    1.0,
-#         'epsilon_final':    0.01,
-#         'learning_rate':    1E-3,
-#         'gamma':            0.99, 
-#         'batch_size':       32
-#     },
-#     'koi-sparse_v0_T24_4x-5step': { 
-#         'env_name':         "sparse_v0_T24_4x",
-#         'double_q':         True,
-#         'dueling':          True,
-#         'nn_layer_width':   32,
-#         'rollout_steps':    5,
-#         'replay_size':      120*365*2,#240*365*2/2, #<<<
-#         'replay_initial':   120*10,#240*10/2,#<<<
-#         'target_net_sync':  120*10,#240*10/2, #<<<
-#         'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
-#         'epsilon_start':    1.0,
-#         'epsilon_final':    0.01,
-#         'learning_rate':    1E-3,
-#         'gamma':            0.9, 
-#         'batch_size':       32
-#     },
-#     'koi-sparse_v0_T24_4x-g99': { 
-#         'env_name':         "sparse_v0_T24_4x",
-#         'double_q':         True,
-#         'dueling':          True,
-#         'nn_layer_width':   32,
-#         'rollout_steps':    1,
-#         'replay_size':      120*365*2,#240*365*2/2, #<<<
-#         'replay_initial':   120*10,#240*10/2,#<<<
-#         'target_net_sync':  120*10,#240*10/2, #<<<
-#         'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
-#         'epsilon_start':    1.0,
-#         'epsilon_final':    0.01,
-#         'learning_rate':    1E-3,
-#         'gamma':            0.99, 
-#         'batch_size':       32
-#     },
-#     'koi-sparse_v0_T24_4x-base': { 
-#         'env_name':         "sparse_v0_T24_4x",
-#         'double_q':         True,
-#         'dueling':          True,
-#         'nn_layer_width':   32,
-#         'rollout_steps':    1,
-#         'replay_size':      120*365*2,#240*365*2/2, #<<<
-#         'replay_initial':   120*10,#240*10/2,#<<<
-#         'target_net_sync':  120*10,#240*10/2, #<<<
-#         'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
-#         'epsilon_start':    1.0,
-#         'epsilon_final':    0.01,
-#         'learning_rate':    1E-3,
-#         'gamma':            0.9, 
-#         'batch_size':       32
-#     },
+    'koi-sparse_v0_T120_1x-check1-50step-g99': { 
+        'env_name':         "sparse_v0_T120_1x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-50step-g99': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-10step-g98': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    10,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.98, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-50step-g98': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.98, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-50step': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-10step': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    10,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-g97-5step': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_1x-g98-5step-rerun-rpsize120-ep120': { 
+        'env_name':         "sparse_v0_T24_1x", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.98,#<<<<<<<<<<<< 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_1x-g97-5step-rerun-rpsize120-ep120': { 
+        'env_name':         "sparse_v0_T24_1x", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_2x-g97-5step-rerun-rpsize120-ep120': { 
+        'env_name':         "sparse_v0_T24_2x", #<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun-rpsize120-ep120': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun-ep120': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      24*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun-tgtsync120': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      24*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  120*10,#240*10/10, #<<<
+        'epsilon_frames':   24*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun-rpinit120': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      24*365*2,#<<<
+        'replay_initial':   120*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   24*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun-rpsize120': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   24*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step-rerun': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      24*365*2,#240*365*2/10, #<<<
+        'replay_initial':   24*10,#240*10/10,#<<<
+        'target_net_sync':  24*10,#240*10/10, #<<<
+        'epsilon_frames':   24*30*6,#240*30*6/10,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g97-5step': { # !!! hyperparams for T120 used
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.97, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g99-5step': { # !!! hyperparams for T120 used 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-5step': {  # !!! hyperparams for T120 used
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.9, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-g99': {  # !!! hyperparams for T120 used
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    1,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T24_4x-base': { 
+        'env_name':         "sparse_v0_T24_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    1,
+        'replay_size':      120*365*2,#240*365*2/2, #<<<
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   120*30*6,#240*30*6/2,#<<<
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.9, 
+        'batch_size':       32
+    },
     'koi-sparse_v0_T120_4x-base': { 
         'env_name':         "sparse_v0_T120_4x",
         'double_q':         True,
