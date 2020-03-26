@@ -1,4 +1,20 @@
 EXP_PARAMS = {
+    'koi-sparse_v0_T120_1x-check1-50step-g996-enp': { 
+        'env_name':         "sparse_v0_T120_1x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.996, 
+        'batch_size':       32
+    },
     'koi-sparse_v0_T120_1x-check1-50step-g99': { 
         'env_name':         "sparse_v0_T120_1x",
         'double_q':         True,
@@ -13,6 +29,22 @@ EXP_PARAMS = {
         'epsilon_final':    0.01,
         'learning_rate':    1E-3,
         'gamma':            0.99, 
+        'batch_size':       32
+    },
+    'koi-sparse_v0_T120_4x-check1-50step-g99-enp': { 
+        'env_name':         "sparse_v0_T120_4x",
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    50,
+        'replay_size':      5*120*365*2,#240*365*2/2, #<<< increasing replay buffer size
+        'replay_initial':   120*10,#240*10/2,#<<<
+        'target_net_sync':  120*10,#240*10/2, #<<<
+        'epsilon_frames':   5*120*30*6,#240*30*6/2,#<<< increasing exploration duration
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.996, #<<<<
         'batch_size':       32
     },
     'koi-sparse_v0_T120_4x-check1-50step-g99': { 
