@@ -594,6 +594,16 @@ class eno_v0(gym.Env):
             return (0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1
     # End of eno_v0
 ########################################################
+########################################################
+
+
+
+########################################################
+# Misc Environments from env_v0
+########################################################
+#
+########################################################
+########################################################
 class eno_v0_g99(eno_v0): # for gamma=0.99
     def reward(self,action): # symmetric linear reward
         if self.RECOVERY_MODE:
@@ -619,77 +629,8 @@ class eno_v0_g999a(eno_v0): # for gamma=0.99
         else:
             return ((0.5 - np.abs(self.benergy_obs - 0.5))*4 - 1)*0.1
 # End of eno_v0_g999a
-########################################################
-########################################################
-class sparse_v0_1x(eno_v0):
-    def reward(self,action): # sparse rewards at particular time intervals
-        end_time = self.env_timeslot_values[-1]
-        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
-        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
-        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
-        interval_set = set((end_time))
-        if self.RECOVERY_MODE:
-            return -1 # penalize recovery mode
-        
-        if self.time_obs in interval_set:
-            batt_log = [obs[3] for obs in self.env_log]
-            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
-            lowthreshold = 2*self.MIN_BATT
-            if lowthreshold<mean_day_batt<(1-lowthreshold):
-                return 1
-            else:
-                return -1
-        else:
-            return 0
-# End of sparse_v0_1x
-########################################################
-########################################################
-class sparse_v0_2x(eno_v0):
-    def reward(self,action): # sparse rewards at particular time intervals
-        end_time = self.env_timeslot_values[-1]
-        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
-        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
-        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
-        interval_set = set((half_time, end_time))
-        if self.RECOVERY_MODE:
-            return -1 # penalize recovery mode
-        
-        if self.time_obs in interval_set:
-            batt_log = [obs[3] for obs in self.env_log]
-            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
-            lowthreshold = 2*self.MIN_BATT
-            if lowthreshold<mean_day_batt<(1-lowthreshold):
-                return 1
-            else:
-                return -1
-        else:
-            return 0
-# End of sparse_v0_2x
-########################################################
-########################################################
-class sparse_v0_4x(eno_v0):
-    def reward(self,action): # sparse rewards at particular time intervals
-        end_time = self.env_timeslot_values[-1]
-        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
-        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
-        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
-        interval_set = set((q1_time, half_time, q3_time, end_time))
-        if self.RECOVERY_MODE:
-            return -1 # penalize recovery mode
-        
-        if self.time_obs in interval_set:
-            batt_log = [obs[3] for obs in self.env_log]
-            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
-            lowthreshold = 2*self.MIN_BATT
-            if lowthreshold<mean_day_batt<(1-lowthreshold):
-                return 1
-            else:
-                return -1
-        else:
-            return 0
-# End of sparse_v0_4x
-########################################################
-class eno_v0a(eno_v0):
+
+class eno_v0a(eno_v0): #changed HFACTOR and DFACTOR
     """An ambient environment simulator for OpenAI gym."""
     metadata = {'render.modes': ['human']}
         
@@ -716,7 +657,7 @@ class eno_v0a(eno_v0):
 # End of eno_v0a
 ########################################################
 ########################################################
-class eno_v0_5dc(eno_v0):
+class eno_v0_5dc(eno_v0): # No. of duty cycles reduced to 5
     # Dutycycles = 5
     """An ambient environment simulator for OpenAI gym."""
     metadata = {'render.modes': ['human']}
@@ -724,7 +665,7 @@ class eno_v0_5dc(eno_v0):
     def __init__(self):
         super(eno_v0c, self).__init__()
         
-        # Actions = 10 discrete duty cycles
+        # Actions = 5 discrete duty cycles
         self.NO_OF_DUTY_CYCLES = 5 #<<<<<
         self.action_space = spaces.Discrete(n=self.NO_OF_DUTY_CYCLES)
 
@@ -742,7 +683,16 @@ class eno_v0_5dc(eno_v0):
 # End of eno_v0_5dc
 ########################################################
 ########################################################
-class eno_v0_T24(eno_v0):
+
+
+########################################################
+# Basic environement with different number of timesteps
+# per day
+########################################################
+#
+########################################################
+########################################################
+class eno_v0_T24(eno_v0): # 24 timesteps in one day
     def __init__(self):
         super(eno_v0_T24, self).__init__()
         
@@ -822,7 +772,8 @@ class eno_v0_T24(eno_v0):
         return np.array(self.obs)
 # End of eno_v0_T24
 ########################################################
-class eno_v0_T48(eno_v0):
+########################################################
+class eno_v0_T48(eno_v0): # 48 timesteps in one day
     def __init__(self):
         super(eno_v0_T48, self).__init__()
         
@@ -902,7 +853,7 @@ class eno_v0_T48(eno_v0):
 # End of eno_v0_T48
 ########################################################
 ########################################################
-class eno_v0_T120(eno_v0):
+class eno_v0_T120(eno_v0): # 120 timesteps in one day
     def __init__(self):
         super(eno_v0_T120, self).__init__()
         
@@ -969,30 +920,16 @@ class eno_v0_T120(eno_v0):
 # End of eno_v0_T120
 ########################################################
 ########################################################
-class sparse_v0_T120_4x(eno_v0_T120):
-    def reward(self,action): # sparse rewards at particular time intervals
-        end_time = self.env_timeslot_values[-1]
-        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
-        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
-        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
-        interval_set = set((q1_time, half_time, q3_time, end_time))
-        if self.RECOVERY_MODE:
-            return -1 # penalize recovery mode
-        
-        if self.time_obs in interval_set:
-            batt_log = [obs[3] for obs in self.env_log]
-            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
-            lowthreshold = 2*self.MIN_BATT
-            if lowthreshold<mean_day_batt<(1-lowthreshold):
-                return 1
-            else:
-                return -1
-        else:
-            return 0
-# End of sparse_v0_T120_4x
+
+
+
+########################################################
+# Sparse Rewards
+########################################################
+#
 ########################################################
 ########################################################
-class sparse_v0_T24_4x(eno_v0_T24):
+class sparse_v0_T24_4x(eno_v0_T24): # 4 rewards per day,24 timesteps per day
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
@@ -1015,7 +952,7 @@ class sparse_v0_T24_4x(eno_v0_T24):
 # End of sparse_v0_T24_4x
 ########################################################
 ########################################################
-class sparse_v0_T24_2x(eno_v0_T24):
+class sparse_v0_T24_2x(eno_v0_T24): # 2 rewards per day, 24 timesteps per day
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
@@ -1038,7 +975,7 @@ class sparse_v0_T24_2x(eno_v0_T24):
 # End of sparse_v0_T24_2x
 ########################################################
 ########################################################
-class sparse_v0_T24_1x(eno_v0_T24):
+class sparse_v0_T24_1x(eno_v0_T24): # 1 reward per day, 24 timesteps per day
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         if self.RECOVERY_MODE:
@@ -1057,7 +994,7 @@ class sparse_v0_T24_1x(eno_v0_T24):
 # End of sparse_v0_T24_1x
 ########################################################
 ########################################################
-class sparse_v0_T120_1x(eno_v0_T120):
+class sparse_v0_T120_1x(eno_v0_T120): # 1 reward per day, 120 timesteps per day
     def reward(self,action): # sparse rewards at particular time intervals
         end_time = self.env_timeslot_values[-1]
         if self.RECOVERY_MODE:
@@ -1074,4 +1011,97 @@ class sparse_v0_T120_1x(eno_v0_T120):
         else:
             return 0
 # End of sparse_v0_T120_1x
+########################################################
+########################################################
+class sparse_v0_T120_4x(eno_v0_T120): # 4 rewards per day, 120 timesteps per day
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((q1_time, half_time, q3_time, end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_T120_4x
+########################################################
+########################################################
+class sparse_v0_1x(eno_v0): # 1 reward per day,240 timesteps per day
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_1x
+########################################################
+########################################################
+class sparse_v0_2x(eno_v0):  # 2 rewards per day,240 timesteps per day
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((half_time, end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_2x
+########################################################
+########################################################
+class sparse_v0_4x(eno_v0):  # 3 rewards per day,240 timesteps per day
+    def reward(self,action): # sparse rewards at particular time intervals
+        end_time = self.env_timeslot_values[-1]
+        half_time = self.env_timeslot_values[int(2*len(self.env_timeslot_values)/4)]
+        q1_time = self.env_timeslot_values[int(len(self.env_timeslot_values)/4)]
+        q3_time = self.env_timeslot_values[int(3*len(self.env_timeslot_values)/4)]
+        interval_set = set((q1_time, half_time, q3_time, end_time))
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        
+        if self.time_obs in interval_set:
+            batt_log = [obs[3] for obs in self.env_log]
+            mean_day_batt = np.mean(batt_log[-len(self.env_timeslot_values):-1])
+            lowthreshold = 2*self.MIN_BATT
+            if lowthreshold<mean_day_batt<(1-lowthreshold):
+                return 1
+            else:
+                return -1
+        else:
+            return 0
+# End of sparse_v0_4x
+########################################################
 ########################################################
