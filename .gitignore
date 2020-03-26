@@ -6,7 +6,6 @@ __pycache__/
 # Jupyter Notebook
 .ipynb_checkpoints/
 .idea/
-*.ipynb # ignore all notebooks
 
 # Tensorboard Runs
 runs/
@@ -18,7 +17,4 @@ runs/
 # Folders
 /experiment_notebooks/
 /experiment_tblogs/
-*.ods
 
-#ignore all notebooks except template_latest.ipynb
-!exp_template.ipynb
