@@ -202,6 +202,19 @@ class night_utility_generator_v2(object): # generates utility of data, dependent
 # End of utility_generator class
 ########################################################
 ########################################################
+class night_utility_generator_v3(object): # generates utility of data, dependent on time
+    def __init__(self):
+        pass    
+    def get_utility(self, time):
+        assert 0<=time<24, 'Invalid time'
+        if 0<=time<6 or 18<time<24:
+            utility = 0.5
+        else:
+            utility = 0.2
+        return utility
+# End of utility_generator class
+########################################################
+########################################################
 # Class for channel fading
 ########################################################
 class channel(object): # determines channel fading, dependent on time
@@ -784,6 +797,95 @@ class utility_v2a_T24(utility_v2_T24):
 ########################################################
 ########################################################
 class utility_v2b_T24(utility_v2_T24):
+    def reward(self,action): 
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        else:
+            sense_dc = action/self.NO_OF_DUTY_CYCLES + self.MIN_DC
+            if sense_dc >= self.utility_obs:
+                return self.utility_obs
+            else:
+                return sense_dc *0.5
+########################################################
+########################################################
+class utility_v3_T24(utility_v0_T24): # using night_utility_generator_v2
+    
+    def reset(self, location, year, LOG_DATA=True):
+
+        # Characterize the harvester
+        self.READINGS_PER_DAY = 24
+        REQ_TIMESLOTS_PER_DAY = 24 #<<<<<<<<<<
+        PREDICTION_HORIZON=24 #<<<<<<<<<<
+        
+
+        self.env_harvester = csv_solar_harvester(location=location,
+                                year=year,
+                                READINGS_PER_DAY = self.READINGS_PER_DAY,
+                                SMAX=4.0, # Max GSR
+                                HENERGY_NOISE=0.1, # henergy artifical noise
+                                NORMALIZED_HMIN_THRES=1E-5, # henergy cutoff
+                                REQ_TIMESLOTS_PER_DAY=REQ_TIMESLOTS_PER_DAY, # no. of timeslots per day
+                                PREDICTION_HORIZON=PREDICTION_HORIZON, # lookahead horizon to predict energy
+                                PENERGY_NOISE=0.005)
+        self.env_timeslot_values = self.env_harvester.time_slots
+        self.ENV_LIFETIME = self.env_harvester.no_of_days
+        
+        # Characterize the battery
+        self.BINIT = 0.7
+        self.BEFF  = 1.0
+        self.env_battery = battery(self.BINIT,self.BEFF)
+
+        # Characterize utility generator
+        self.utility_gen = night_utility_generator_v3()
+        # Characterize channel fading
+        
+        # Data logging variables
+        self.LOG_DATA = LOG_DATA # Flag to whether or not log data
+        self.env_log = [] # record all values in the environment
+        self.action_log = [] # record all actions sent to the environment
+        self.eno_log = []
+        
+        # Observation variables
+        self.time_obs = None
+        self.henergy_obs = None
+        self.penergy_obs = None
+        self.benergy_obs = None
+        self.utility_obs = None #<<<<<<<<<
+        
+        # Environment Flags
+        self.RECOVERY_MODE = False # battery is recovering to BINIT from complete discharge & node is suspended
+        
+
+        # Get observation
+        self.time_obs, self.henergy_obs, self.penergy_obs, DAY_END, HARVESTER_END = self.env_harvester.step()
+        self.benergy_obs = self.env_battery.get_batt_state()
+        self.utility_obs = self.utility_gen.get_utility(self.time_obs) #<<<<<<<<<<
+        
+        self.obs = (self.time_obs/self.READINGS_PER_DAY, 
+                    self.henergy_obs, 
+                    self.penergy_obs, 
+                    self.benergy_obs,
+                    self.utility_obs) #<<<<<<<<
+        if self.LOG_DATA:
+            self.env_log.append(self.obs)
+        return np.array(self.obs)
+
+# End of utility_v2_T24
+########################################################
+########################################################
+class utility_v3a_T24(utility_v3_T24):
+    def reward(self,action): 
+        if self.RECOVERY_MODE:
+            return -1 # penalize recovery mode
+        else:
+            sense_dc = action/self.NO_OF_DUTY_CYCLES + self.MIN_DC
+            if sense_dc >= self.utility_obs:
+                return self.utility_obs
+            else:
+                return sense_dc
+########################################################
+########################################################
+class utility_v3b_T24(utility_v3_T24):
     def reward(self,action): 
         if self.RECOVERY_MODE:
             return -1 # penalize recovery mode
