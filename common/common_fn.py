@@ -158,6 +158,11 @@ def display_env_log_eno(env, reward_rec, RECOVERY_rec, START_DAY=0, NO_OF_DAY_TO
     benergy_ax   = fig.add_subplot(SUBPLOTS,1,3)
     eno_perf_ax  = fig.add_subplot(SUBPLOTS,1,4)
     
+    henergy_ax.grid(which='major', axis='x', linestyle='--')
+    sense_dc_ax.grid(which='major', axis='x', linestyle='--')
+    benergy_ax.grid(which='major', axis='x', linestyle='--')
+    eno_perf_ax.grid(which='major', axis='x', linestyle='--')
+
 #     time_ax.set_ylim(0, env.READINGS_PER_DAY)
 #     henergy_ax.set_ylim(0,1)
 #     penergy_ax.set_ylim(0,1)
@@ -216,6 +221,11 @@ def display_env_log_utility(env, reward_rec, RECOVERY_rec, START_DAY=0, NO_OF_DA
     sense_dc_ax  = fig.add_subplot(SUBPLOTS,1,2)
     benergy_ax   = fig.add_subplot(SUBPLOTS,1,3)
     eno_perf_ax  = fig.add_subplot(SUBPLOTS,1,4)
+    
+    henergy_ax.grid(which='major', axis='x', linestyle='--')
+    sense_dc_ax.grid(which='major', axis='x', linestyle='--')
+    benergy_ax.grid(which='major', axis='x', linestyle='--')
+    eno_perf_ax.grid(which='major', axis='x', linestyle='--')
     
 #     time_ax.set_ylim(0, env.READINGS_PER_DAY)
 #     henergy_ax.set_ylim(0,1)

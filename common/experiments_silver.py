@@ -1,4 +1,148 @@
 EXP_PARAMS = {
+    'silver-utility_v2b_T24-enp-g99': { 
+        'env_name':         "utility_v2b_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99,
+        'batch_size':       32
+    },
+    'silver-utility_v2a_T24-enp-g99': { 
+        'env_name':         "utility_v2a_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99,
+        'batch_size':       32
+    },
+    'silver-utility_v0b_T24_u2-enp-g99': { 
+        'env_name':         "utility_v0b_T24_u2", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99,
+        'batch_size':       32
+    },
+    'silver-utility_v0c_T24-enp-g99': { 
+        'env_name':         "utility_v0c_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99,
+        'batch_size':       32
+    },
+    'silver-utility_v0b_T24-enp-g99': { 
+        'env_name':         "utility_v0b_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.99,
+        'batch_size':       32
+    },
+    'silver-utility_v0b_T24-enp-g95': { 
+        'env_name':         "utility_v0b_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.95,
+        'batch_size':       32
+    },
+    'silver-utility_v0a_T24-enp-g95': { 
+        'env_name':         "utility_v0a_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.95,
+        'batch_size':       32
+    },
+    'silver-utility_v0b_T24-enp-g9': { 
+        'env_name':         "utility_v0b_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.9,
+        'batch_size':       32
+    },
+    'silver-utility_v0a_T24-enp-g9': { 
+        'env_name':         "utility_v0a_T24", #<<<<<<
+        'double_q':         True,
+        'dueling':          True,
+        'nn_layer_width':   32,
+        'rollout_steps':    5,
+        'replay_size':      5*24*365*2,
+        'replay_initial':   24*10,
+        'target_net_sync':  24*10,
+        'epsilon_frames':   5*24*30*6,
+        'epsilon_start':    1.0,
+        'epsilon_final':    0.01,
+        'learning_rate':    1E-3,
+        'gamma':            0.9,
+        'batch_size':       32
+    },
     'silver-utility_v0_T120-enp-g9': { # Derived from #45
         'env_name':         "utility_v0_T120",
         'double_q':         True,
